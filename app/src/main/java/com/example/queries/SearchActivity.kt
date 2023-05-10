@@ -12,6 +12,7 @@ import com.example.queries.adapters.TrendingQuestionsAdapter
 import com.example.queries.databinding.ActivitySearchBinding
 import com.example.queries.models.Item
 import com.example.queries.utils.Constants
+import com.example.queries.utils.Constants.Companion.QUESTION
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -33,11 +34,14 @@ class SearchActivity : AppCompatActivity() {
 
         prepareRecyclerView()
 
-        binding.searchButton.setOnClickListener {
+        var intent = intent
+        var question = intent.getStringExtra(QUESTION)
 
-                searchViewModel.getsearchedQuestions(binding.etSearchFragment.text.toString())
-
+        if (question != null) {
+            searchViewModel.getsearchedQuestions(question)
         }
+
+
 
         searchViewModel.observeSearchedQuestionsLiveData().observe(this, Observer { items->
             itemList = items

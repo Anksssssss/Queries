@@ -10,6 +10,7 @@ import com.example.queries.ViewModel.MainViewModel
 import com.example.queries.adapters.TrendingQuestionsAdapter
 import com.example.queries.databinding.ActivityMainBinding
 import com.example.queries.utils.Constants.Companion.LINK
+import com.example.queries.utils.Constants.Companion.QUESTION
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -42,8 +43,9 @@ class MainActivity : AppCompatActivity() {
 
         onItemClick()
 
-        binding.imgSearch.setOnClickListener {
+        binding.searchButton.setOnClickListener {
             val intent = Intent(this,SearchActivity::class.java)
+            intent.putExtra(QUESTION,binding.etMainActivity.text.toString())
             startActivity(intent)
         }
 
