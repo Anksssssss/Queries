@@ -4,10 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.queries.ViewModel.SearchViewModel
+import com.example.queries.adapters.TagsAdapter
 import com.example.queries.adapters.TrendingQuestionsAdapter
 import com.example.queries.databinding.ActivitySearchBinding
 import com.example.queries.models.Item
@@ -21,6 +23,7 @@ class SearchActivity : AppCompatActivity() {
     lateinit var binding : ActivitySearchBinding
     lateinit var searchViewModel: SearchViewModel
     lateinit var trendingQuestionsAdapter: TrendingQuestionsAdapter
+    lateinit var tagsAdapter : TagsAdapter
     lateinit var itemList: List<Item>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +34,15 @@ class SearchActivity : AppCompatActivity() {
 
         searchViewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         trendingQuestionsAdapter = TrendingQuestionsAdapter()
+        tagsAdapter = TagsAdapter()
 
         prepareRecyclerView()
+
+        prepareTagsRecyclerView()
+        searchViewModel.getTags()
+        searchViewModel.observeTagsLiveData().observe(this, Observer {
+            tagsAdapter.differ.submitList(it)
+        })
 
         var intent = intent
         var question = intent.getStringExtra(QUESTION)
@@ -48,9 +58,9 @@ class SearchActivity : AppCompatActivity() {
             trendingQuestionsAdapter.differ.submitList(itemList)
         })
 
-        onItemClick()
+        onSearchItemClick()
 
-//        binding.svTags.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+//        binding.svSearchActivity.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
 //            override fun onQueryTextSubmit(query: String?): Boolean {
 //                return false
 //            }
@@ -61,6 +71,27 @@ class SearchActivity : AppCompatActivity() {
 //            }
 //        })
 
+        onTagsItemClick()
+
+    }
+
+    private fun onTagsItemClick() {
+        tagsAdapter.onItemClick = {
+            val tag = it.name
+            val filteredList = ArrayList<Item>()
+            for(i in itemList){
+                for(j in i.tags){
+                    if(j.toLowerCase().equals(tag.toLowerCase())){
+                        filteredList.add(i)
+                    }
+                }
+            }
+            if(filteredList.isEmpty()){
+                Toast.makeText(this,"No data Found",Toast.LENGTH_SHORT).show()
+            }else{
+                trendingQuestionsAdapter.differ.submitList(filteredList)
+            }
+        }
     }
 
     private fun filterList(query:String?){
@@ -68,9 +99,15 @@ class SearchActivity : AppCompatActivity() {
             val filteredList = ArrayList<Item>()
 
             for(i in itemList) {
-                if (i.tags.contains(query)) {
-                    filteredList.add(i)
+                var t :String = ""
+                for(j in i.tags){
+                    t +=j +", "
                 }
+                    if (t.contains(query)) {
+                        filteredList.add(i)
+                    }
+
+
             }
             if(filteredList.isEmpty()){
                 Toast.makeText(this,"No data Found",Toast.LENGTH_SHORT).show()
@@ -80,11 +117,18 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun onItemClick() {
+    private fun onSearchItemClick() {
         trendingQuestionsAdapter.onItemClick = {
             val intent = Intent(this,QuestionPage::class.java)
             intent.putExtra(Constants.LINK,it.link)
             startActivity(intent)
+        }
+    }
+
+    private fun prepareTagsRecyclerView(){
+        binding.rvTags.apply {
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            adapter = tagsAdapter
         }
     }
 

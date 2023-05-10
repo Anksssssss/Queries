@@ -1,6 +1,7 @@
 package com.example.queries.api
 
 import com.example.queries.models.QuestionsList
+import com.example.queries.models.TagList
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -20,6 +21,9 @@ interface QuestionsApi {
 //                @Query("intitle") question : String,
 //                @Query("tagged") tag
 //        ):
+
+        @GET("tags?order=desc&sort=popular&site=stackoverflow")
+        fun getTags():Call<TagList>
 
 
 
