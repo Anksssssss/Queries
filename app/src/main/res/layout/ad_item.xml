@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/adImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/mathongo" />
+
+    <TextView
+        android:id="@+id/adTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Math is and more fun when done with MathonGo!"
+        android:textColor="@color/g_black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/adDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Learn how to attack Math questions with India's one of the Best Teachers"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/adButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Explore Our Courses" />
+
+</LinearLayout>

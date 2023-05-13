@@ -60,16 +60,16 @@ class SearchActivity : AppCompatActivity() {
 
         onSearchItemClick()
 
-//        binding.svSearchActivity.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//                filterList(newText)
-//                return true
-//            }
-//        })
+        binding.svSearchActivity.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true
+            }
+        })
 
         onTagsItemClick()
 
@@ -95,24 +95,20 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun filterList(query:String?){
-        if(query!=null){
+        val tag = query
+        if(tag!=null) {
             val filteredList = ArrayList<Item>()
-
-            for(i in itemList) {
-                var t :String = ""
-                for(j in i.tags){
-                    t +=j +", "
-                }
-                    if (t.contains(query)) {
+            for (i in itemList) {
+                for (j in i.tags) {
+                    if (j.toLowerCase().equals(tag.toLowerCase())) {
                         filteredList.add(i)
                     }
-
-
+                }
             }
-            if(filteredList.isEmpty()){
-                Toast.makeText(this,"No data Found",Toast.LENGTH_SHORT).show()
-            }else{
-                itemList = filteredList
+            if (filteredList.isEmpty()) {
+                Toast.makeText(this, "No data Found", Toast.LENGTH_SHORT).show()
+            } else {
+                trendingQuestionsAdapter.differ.submitList(filteredList)
             }
         }
     }
