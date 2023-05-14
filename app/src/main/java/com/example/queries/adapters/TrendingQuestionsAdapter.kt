@@ -52,9 +52,8 @@ class TrendingQuestionsAdapter: RecyclerView.Adapter<TrendingQuestionsAdapter.Tr
         holder.binding.userName.text = "Name: "+item.owner.display_name
         holder.binding.userReputation.text = "Reputation: "+ item.owner.reputation.toString()
 
-        val timeZoneDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val timeZoneString = timeZoneDate.format(item.creation_date)
-        holder.binding.tvDate.text = timeZoneString
+
+        holder.binding.tvDate.text = convertEpochToDateString(item.creation_date?:0)
 
         var tag = ""
         var c = 1
@@ -72,6 +71,12 @@ class TrendingQuestionsAdapter: RecyclerView.Adapter<TrendingQuestionsAdapter.Tr
         }
 
 
+    }
+
+    fun convertEpochToDateString(epochTime: Long): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val date = Date(epochTime * 1000)
+        return dateFormat.format(date)
     }
 
     override fun getItemCount(): Int {
