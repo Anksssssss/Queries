@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.queries.R
+import com.example.queries.data.QuestionItem
 import com.example.queries.databinding.AdItemBinding
 import com.example.queries.databinding.QuestionItemBinding
 import com.example.queries.models.Item
 import java.util.*
 
-class CustomAdapter(private val itemList: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class CustomAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     // Define your regular item view type
     private val ITEM_TYPE = 0
@@ -19,7 +20,14 @@ class CustomAdapter(private val itemList: List<Any>) : RecyclerView.Adapter<Recy
     // Define your ad item view type
     private val AD_ITEM_TYPE = 1
 
-    lateinit var onItemClick : ((Item)->Unit)
+    lateinit var onItemClick : ((QuestionItem)->Unit)
+
+    private var itemList: List<Any> = emptyList()
+
+    fun setData(dataList: List<Any>) {
+        this.itemList = dataList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -41,32 +49,35 @@ class CustomAdapter(private val itemList: List<Any>) : RecyclerView.Adapter<Recy
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ItemViewHolder -> {
-                val item = itemList[position] as Item
+                val item = itemList[position] as QuestionItem
 
                 Glide.with(holder.itemView)
-                    .load(item.owner.profile_image)
+                    .load(item.profile_image)
                     .into(holder.bindingItem.imgOwner)
 
                 holder.bindingItem.tvQuestion.text = item.title
-                holder.bindingItem.tvViews.text = item.view_count.toString()
-                holder.bindingItem.tvAnswerCount.text = "Answers: "+item.answer_count.toString()
-                holder.bindingItem.userName.text = "Name: "+item.owner.display_name
-                holder.bindingItem.userReputation.text = "Reputation: "+ item.owner.reputation.toString()
+                holder.bindingItem.tvViews.text = item.viewCount.toString()
+                holder.bindingItem.tvAnswerCount.text = "Answers: "+item.answerCount.toString()
+                holder.bindingItem.userName.text = "Name: "+item.displayName
+                holder.bindingItem.userReputation.text = "Reputation: "+ item.reputation.toString()
 
                 val timeZoneDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val timeZoneString = timeZoneDate.format(item.creation_date)
+                val timeZoneString = timeZoneDate.format(item.creationDate)
                 holder.bindingItem.tvDate.text = timeZoneString
 
                 var tag = ""
                 var c = 1
-                for (t in item.tags){
-                    if(c>3){
-                        break
+                if(item.tags!=null){
+                    for (t in item?.tags!!){
+                        if(c>3){
+                            break
+                        }
+                        tag += t+", "
+                        c++
                     }
-                    tag += t+", "
-                    c++
+                    holder.bindingItem.tvTags.text = tag
                 }
-                holder.bindingItem.tvTags.text = tag
+
 
                 holder.itemView.setOnClickListener {
                     onItemClick.invoke(item)

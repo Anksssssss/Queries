@@ -1,36 +1,36 @@
 package com.example.queries.ViewModel
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.util.Log
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.room.withTransaction
+import com.example.queries.Repository.MyRepository
 import com.example.queries.api.RetrofitInstance
+import com.example.queries.data.QuestionDatabase
+import com.example.queries.data.QuestionItem
 import com.example.queries.models.Item
 import com.example.queries.models.QuestionsList
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainViewModel : ViewModel(){
+class MainViewModel(val repository: MyRepository) : ViewModel(){
 
-    private var questionLiveData = MutableLiveData<List<Item>>()
-
-     fun getTrendingQuestions(){
-        RetrofitInstance.api.getTrendingQuestions().enqueue(object :Callback<QuestionsList>{
-            override fun onResponse(call: Call<QuestionsList>, response: Response<QuestionsList>) {
-                if(response.body()!=null){
-                   questionLiveData.postValue(response.body()!!.items)
-                }
-                else return
-            }
-
-            override fun onFailure(call: Call<QuestionsList>, t: Throwable) {
-               Log.d("MainViewModel",t.message.toString())
-            }
-        })
+     fun fetchAndCacheData(){
+         viewModelScope.launch {
+             repository.fetchDataAndCache()
+         }
     }
 
-    fun observeQuestionsLiveData(): LiveData<List<Item>>{
-        return questionLiveData
-    }
+
 }
