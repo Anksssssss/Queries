@@ -46,7 +46,6 @@
             android:id="@+id/et_mainActivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#c0c0c0"
             android:drawableLeft="@drawable/ic_search"
             android:hint="Search...."
             android:padding="@dimen/_8sdp"
@@ -55,7 +54,7 @@
 
     </androidx.cardview.widget.CardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,11 +85,14 @@
         android:id="@+id/rv_trending_questions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_18sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_18sdp"
-        android:layout_marginStart="@dimen/_18sdp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_trending_questions"
+        android:layout_marginBottom="10dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_trending_questions"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_trending_questions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ data class Item(
     val answer_count: Int,
     val community_owned_date: Int,
     val content_license: String,
-    val creation_date: Int,
+    val creation_date: Long,
     val is_answered: Boolean,
     val last_activity_date: Int,
     val last_edit_date: Int,

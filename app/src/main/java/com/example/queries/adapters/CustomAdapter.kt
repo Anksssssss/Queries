@@ -1,15 +1,14 @@
 package com.example.queries.adapters
 
 import android.icu.text.SimpleDateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.queries.R
 import com.example.queries.data.QuestionItem
 import com.example.queries.databinding.AdItemBinding
 import com.example.queries.databinding.QuestionItemBinding
-import com.example.queries.models.Item
 import java.util.*
 
 class CustomAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -60,30 +59,27 @@ class CustomAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.bindingItem.tvAnswerCount.text = "Answers: "+item.answerCount.toString()
                 holder.bindingItem.userName.text = "Name: "+item.displayName
                 holder.bindingItem.userReputation.text = "Reputation: "+ item.reputation.toString()
+                holder.bindingItem.tvDate.text = convertEpochToDateString(item.creationDate?:0)
 
-                val timeZoneDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                val timeZoneString = timeZoneDate.format(item.creationDate)
-                holder.bindingItem.tvDate.text = timeZoneString
-
-                var tag = ""
-                var c = 1
-                if(item.tags!=null){
-                    for (t in item?.tags!!){
-                        if(c>3){
-                            break
-                        }
-                        tag += t+", "
-                        c++
-                    }
-                    holder.bindingItem.tvTags.text = tag
-                }
+//                var tag = ""
+//                var c = 1
+//                if(item.tags!=null){
+//                    for (t in item?.tags!!){
+//                        if(c>3){
+//                            break
+//                        }
+//                        tag += t+", "
+//                        c++
+//                    }
+                    holder.bindingItem.tvTags.text = item.tags
+//                }
 
 
                 holder.itemView.setOnClickListener {
                     onItemClick.invoke(item)
                 }
             }
-            // Skip binding for the ad item layout
+
         }
     }
 
@@ -99,9 +95,15 @@ class CustomAdapter() : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return itemList.size
     }
 
-    // Define your regular item view holder
+    fun convertEpochToDateString(epochTime: Long): String {
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val date = Date(epochTime * 1000)
+        return dateFormat.format(date)
+    }
+
+
     class ItemViewHolder(val bindingItem: QuestionItemBinding):RecyclerView.ViewHolder(bindingItem.root)
 
-    // Define your ad item view holder
+
     class AdViewHolder(val bindingAd : AdItemBinding):RecyclerView.ViewHolder(bindingAd.root)
 }

@@ -14,7 +14,7 @@ data class QuestionItem(
     var answerCount: Int? = null,
     var displayName: String? = null,
     var reputation: Int? = null,
-    var creationDate: Int? = null,
+    var creationDate: Long? = null,
     var tags: String? = null,
     var link: String? = null,
 

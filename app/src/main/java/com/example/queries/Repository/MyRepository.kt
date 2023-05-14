@@ -59,12 +59,16 @@ class MyRepository ( private val questionDao: QuestionsDao) {
             questionItem?.link = i.link
 
             var tag = ""
-            var c = 1
+            var c = 0
             for (t in i.tags) {
-                if (c > 3) {
+                if (c > 2) {
                     break
                 }
-                tag += t + ", "
+                if(c==i.tags.lastIndex || c==2){
+                    tag += t
+                }else{
+                    tag += t + ", "
+                }
                 c++
             }
             questionItem?.tags = tag
