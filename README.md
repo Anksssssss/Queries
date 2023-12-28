@@ -18,13 +18,16 @@ any particular question in WebView.
 # Tech, frameworks and libraries used
 
 • Kotlin
+
 • MVVM
+
 • Room Database
+
 • Retrofit
 
 # APIs
 
-• StackOverflow Api
+StackOverflow Api
 
 # Link for the apk
 
@@ -32,4 +35,4 @@ https://github.com/Anksssssss/Queries/blob/master/apk/app-debug.apk
 
 # Video
 
-https://github.com/Anksssssss/Queries/blob/master/apk/app-debug.apk
+[https://github.com/Anksssssss/Queries/blob/master/apk/app-debug.apk](https://drive.google.com/file/d/19xFwTbTppOBU1ORfR0ZCMEsTelbNWKMR/view?usp=drive_link)https://drive.google.com/file/d/19xFwTbTppOBU1ORfR0ZCMEsTelbNWKMR/view?usp=drive_link
