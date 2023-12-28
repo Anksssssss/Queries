@@ -14,6 +14,8 @@ any particular question in WebView.
 
 - [Tech, frameworks and libraries used](#tech-,-frameworks-and-libraries-used)
 - [APIs](#apis)
+- [Link for the apk](#link-for-the-apk)
+- [Video](#video)
 
 # Tech, frameworks and libraries used
 
@@ -35,4 +37,4 @@ https://github.com/Anksssssss/Queries/blob/master/apk/app-debug.apk
 
 # Video
 
-[https://github.com/Anksssssss/Queries/blob/master/apk/app-debug.apk](https://drive.google.com/file/d/19xFwTbTppOBU1ORfR0ZCMEsTelbNWKMR/view?usp=drive_link)https://drive.google.com/file/d/19xFwTbTppOBU1ORfR0ZCMEsTelbNWKMR/view?usp=drive_link
+https://drive.google.com/file/d/19xFwTbTppOBU1ORfR0ZCMEsTelbNWKMR/view?usp=sharing
