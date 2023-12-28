@@ -10,6 +10,15 @@ any particular question in WebView.
 
 • There is a search feature where user can query/search particular question and can also filter questions based on tags.
 
+#Table of contents
+
+- [Tech, frameworks and libraries used](#tech-,-frameworks-and-libraries-used)
+- [APIs](#apis)
+
+#Tech, frameworks and libraries used
+
+#APIs
+
 
 [Apk for the app](https://github.com/Anksssssss/Queries/blob/master/apk/app-debug.apk)
 
